@@ -1,7 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
-import { Avatar, AvatarFallback } from "@heroui/react";
+import { Avatar} from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -123,6 +123,7 @@ const NavBarPage = () => {
                 </div>
 
                 {/* MOBILE MENU */}
+
                 {isOpen && (
                     <div className="md:hidden pb-5 animate-in fade-in slide-in-from-top-5 duration-300">
 
@@ -135,16 +136,10 @@ const NavBarPage = () => {
                                     <>
                                         <div className="flex items-center gap-3">
                                             <Avatar
-                                                src={
-                                                    user?.image
-                                                }
+                                                src={user?.image || ""}
+                                                name={user?.name || "User"}
                                                 className="w-12 h-12 border-2 border-blue-500"
                                             />
-                                            <AvatarFallback>
-                                                {user?.name
-                                                    ? user.name.charAt(0)
-                                                    : "U"}
-                                            </AvatarFallback>
 
                                             <div>
                                                 <h2 className="font-semibold">

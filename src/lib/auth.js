@@ -9,7 +9,21 @@ export const auth = betterAuth({
   database: mongodbAdapter(db, {
     client
   }),
-  emailAndPassword:{
+  emailAndPassword: {
     enabled: true,
+  },
+  socialProviders: {
+    google: {
+      enabled: true,
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    }
+  },
+  // Add this configuration to allow automatic account linking
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google"] // Dynamically links Google logins to existing email accounts
+    }
   }
 });

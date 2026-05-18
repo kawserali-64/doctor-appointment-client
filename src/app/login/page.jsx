@@ -12,21 +12,22 @@ import {
     TextField,
 } from "@heroui/react";
 import { redirect } from "next/navigation";
+import { FcGoogle } from "react-icons/fc";
 
 const LoginPage = () => {
-    const onSubmit = async(e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const user = Object.fromEntries(formData.entries());
-        
-        const {data, error} = await authClient.signIn.email({
+
+        const { data, error } = await authClient.signIn.email({
             email: user.email,
             password: user.password
         })
-        if(data){
+        if (data) {
             redirect("/");
         }
-        if(error){
+        if (error) {
             alert(error.message);
         }
 
@@ -82,6 +83,29 @@ const LoginPage = () => {
                         </Button>
                     </div>
                 </Form>
+                <div className="w-full">
+                    {/* Divider */}
+                    <div className="flex items-center gap-3 my-5">
+                        <div className="flex-1 h-px bg-gray-300"></div>
+                        <p className="text-sm text-gray-500">OR</p>
+                        <div className="flex-1 h-px bg-gray-300"></div>
+                    </div>
+
+                    {/* Google Button */}
+                    <Button
+                        onClick={() =>
+                            authClient.signIn.social({
+                                provider: "google",
+                                callbackURL: "/",
+                            })
+                        }
+                        variant="bordered"
+                        className="w-full rounded-none h-12 text-base font-medium border-gray-300 hover:bg-gray-100 transition"
+                    >
+                        <FcGoogle size={24} />
+                        Continue with Google
+                    </Button>
+                </div>
             </Card>
         </div>
     );

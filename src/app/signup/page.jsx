@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
 import {
     Button,
     Card,
@@ -14,21 +15,21 @@ import {
 import { redirect } from "next/navigation";
 
 const SignUpPage = () => {
-    const onSubmit = async(e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const user = Object.fromEntries(formData.entries());
-        
-        const {data, error} = await authClient.signUp.email({
+
+        const { data, error } = await authClient.signUp.email({
             email: user.email,
             password: user.password,
             name: user.name,
             image: user.image
         })
-        if(data){
+        if (data) {
             redirect("/");
         }
-        if(error){
+        if (error) {
             alert(error.message);
         }
 
@@ -43,7 +44,7 @@ const SignUpPage = () => {
                     <TextField
                         isRequired
                         name="name"
-                        type="text"   
+                        type="text"
                     >
                         <Label>Name</Label>
                         <Input placeholder="Enter your name" />
@@ -52,7 +53,7 @@ const SignUpPage = () => {
                     <TextField
                         isRequired
                         name="image"
-                        type="url"   
+                        type="url"
                     >
                         <Label>image url</Label>
                         <Input placeholder="Enter image URL" />
@@ -102,6 +103,29 @@ const SignUpPage = () => {
                         </Button>
                     </div>
                 </Form>
+                <div className="w-full">
+                    {/* Divider */}
+                    <div className="flex items-center gap-3 my-5">
+                        <div className="flex-1 h-px bg-gray-300"></div>
+                        <p className="text-sm text-gray-500">OR</p>
+                        <div className="flex-1 h-px bg-gray-300"></div>
+                    </div>
+
+                    {/* Google Button */}
+                    <Button
+                        onClick={() =>
+                            authClient.signIn.social({
+                                provider: "google",
+                                callbackURL: "/",
+                            })
+                        }
+                        variant="bordered"
+                        className="w-full rounded-none h-12 text-base font-medium border-gray-300 hover:bg-gray-100 transition"
+                    >
+                        <FcGoogle size={24} />
+                        Continue with Google
+                    </Button>
+                </div>
             </Card>
         </div>
     );
