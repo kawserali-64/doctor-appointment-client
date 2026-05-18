@@ -11,6 +11,7 @@ import {
   BadgeCheck,
   HeartPulse,
 } from "lucide-react";
+import BookingCardPage from "@/components/BookingCard";
 
 const DoctorDetailsPage = async ({ params }) => {
   const { id } = await params;
@@ -211,19 +212,14 @@ const DoctorDetailsPage = async ({ params }) => {
             </div>
 
             {/* buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <div>
 
-              <Button className="bg-cyan-600 hover:bg-cyan-700 text-white rounded-2xl px-8 py-7 text-base font-semibold shadow-xl">
-                <CalendarDays size={20} />
-                Book Appointment
-              </Button>
-
-              <Button
-                variant="bordered"
-                className="border-2 border-cyan-500 text-cyan-700 rounded-2xl px-8 py-7 text-base font-semibold bg-white"
-              >
-                Send Message
-              </Button>
+               
+              </div>
+              <div>
+                <BookingCardPage doctor={doctor} />
+              </div>
             </div>
           </div>
         </div>
