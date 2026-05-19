@@ -24,13 +24,12 @@ export function BookingUpdate({
         setAppointmentTime(currentTime || "");
     }, [currentDate, currentTime]);
 
-    // ✅ UPDATE FUNCTION
     const handleUpdate = async () => {
         try {
             const { data: tokenData, } = await authClient.token();
 
             const res = await fetch(
-                `http://localhost:5000/booking/${bookingId}`,
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${bookingId}`,
                 {
                     method: "PUT",
                     headers: {
