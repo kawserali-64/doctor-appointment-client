@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { AlertDialog, Button } from "@heroui/react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -26,6 +27,7 @@ export function BookingUpdate({
     // ✅ UPDATE FUNCTION
     const handleUpdate = async () => {
         try {
+            const { data: tokenData, } = await authClient.token();
 
             const res = await fetch(
                 `http://localhost:5000/booking/${bookingId}`,
@@ -33,6 +35,7 @@ export function BookingUpdate({
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
+                        "Authorization": `Bearer ${tokenData.token}`,
                     },
                     body: JSON.stringify({
                         appointmentDate,

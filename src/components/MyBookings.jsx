@@ -20,8 +20,15 @@ const MyBookings = () => {
             try {
                 setLoading(true);
 
+                const {data:tokenData,} =await authClient.token();
+                
                 const res = await fetch(
-                    `http://localhost:5000/booking/${userEmail}`
+                    `http://localhost:5000/booking/${userEmail}`,
+                    {
+                        headers: {
+                            authorization: `Bearer ${tokenData?.token}`
+                        }
+                    }
                 );
 
                 const bookingId = await res.json();

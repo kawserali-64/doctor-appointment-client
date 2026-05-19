@@ -31,10 +31,12 @@ const BookingCardPage = ({ doctor }) => {
             appointmentDate: value?.toString(),
             appointmentTime: selectedTime,
         };
+        
+        const {data:tokenData,} =await authClient.token();
 
         const res = await fetch("http://localhost:5000/booking", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json",authorization: `Bearer ${tokenData?.token}` },
             body: JSON.stringify(bookingData),
         });
         const data = await res.json();

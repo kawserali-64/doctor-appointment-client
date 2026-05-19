@@ -12,12 +12,19 @@ import {
   HeartPulse,
 } from "lucide-react";
 import BookingCardPage from "@/components/BookingCard";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const DoctorDetailsPage = async ({ params }) => {
   const { id } = await params;
+  const {token }= await auth.api.getToken({
+    headers:await headers(),
+  });
 
-  const res = await fetch(`http://localhost:5000/doctors/${id}`, {
-    cache: "no-store",
+  const res = await fetch(`http://localhost:5000/doctors/${id}`,{
+    headers: {
+      authorization: `Bearer ${token}`
+    }
   });
 
   const doctor = await res.json();
