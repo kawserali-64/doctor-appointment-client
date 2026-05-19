@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import { BookingDelete } from "./BookingDelete";
+import Image from "next/image";
+import { BookingUpdate } from "./bookingUpdate";
 
 const MyBookings = () => {
     const { data: session } = authClient.useSession();
@@ -21,8 +24,8 @@ const MyBookings = () => {
                     `http://localhost:5000/booking/${userEmail}`
                 );
 
-                const data = await res.json();
-                setBookings(data);
+                const bookingId = await res.json();
+                setBookings(bookingId);
             } catch (err) {
                 console.log(err);
             } finally {
@@ -78,21 +81,22 @@ const MyBookings = () => {
                             {bookings.map((b, index) => (
                                 <tr
                                     key={b._id}
-                                    className={`border-b hover:bg-gray-50 transition ${
-                                        index % 2 === 0
-                                            ? "bg-white"
-                                            : "bg-gray-50"
-                                    }`}
+                                    className={`border-b hover:bg-gray-50 transition ${index % 2 === 0
+                                        ? "bg-white"
+                                        : "bg-gray-50"
+                                        }`}
                                 >
                                     {/* Doctor */}
                                     <td className="py-3 px-4">
                                         <div className="flex items-center gap-3">
-                                            <img
-                                                src={
-                                                    b.doctorImage ||
-                                                    "https://i.ibb.co/4pDNDk1/doctor.png"
-                                                }
-                                                className="w-12 h-12 rounded-full object-cover border"
+
+
+                                            <Image
+                                                src={b.doctorImage}
+                                                width={50}
+                                                height={50}
+                                                alt="doctor"
+                                                className="rounded-full object-cover"
                                             />
                                             <div>
                                                 <p className="font-semibold">
@@ -125,13 +129,9 @@ const MyBookings = () => {
                                     {/* Actions */}
                                     <td className="py-3 px-4">
                                         <div className="flex gap-2">
-                                            <button className="px-3 py-1 text-xs rounded bg-blue-500 text-white hover:bg-blue-600">
-                                                Update
-                                            </button>
+                                            <BookingUpdate bookingId={b._id} /> 
 
-                                            <button className="px-3 py-1 text-xs rounded bg-red-500 text-white hover:bg-red-600">
-                                                Delete
-                                            </button>
+                                            <BookingDelete bookingId={b._id} />
                                         </div>
                                     </td>
                                 </tr>
