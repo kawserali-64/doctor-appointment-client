@@ -25,13 +25,30 @@ const AllAppointment = async ({ searchParams }) => {
         <div className="container mx-auto mb-5 mt-5">
 
             {/* Header */}
-            <div className="mb-10 text-center">
-                <h1 className="text-4xl font-bold text-gray-800">
-                    Find Your Doctor 👨‍⚕️
+            <div className="mb-14 text-center">
+               
+                {/* TITLE */}
+                <h1
+                    className="
+        mt-5
+        text-3xl sm:text-4xl md:text-5xl
+        font-black
+        leading-tight
+        text-gray-800
+        "
+                >
+                    Find Your
+                    <span className="text-cyan-600"> Doctor</span>
                 </h1>
-                <p className="text-gray-500 mt-2">
-                    Book appointments with trusted specialists in seconds
+
+                {/* DESCRIPTION */}
+                <p
+                    className=" text-gray-500 mt-4 max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed"
+                >
+                    Book appointments with trusted specialists instantly and
+                    receive quality healthcare support from experienced doctors.
                 </p>
+
             </div>
 
             {/* Search Component */}
@@ -42,7 +59,7 @@ const AllAppointment = async ({ searchParams }) => {
                 {filteredDoctors.map((doctor) => (
                     <Card
                         key={doctor._id}
-                        className="group bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 p-5"
+                        className="group bg-white rounded-3xl overflow-hidden border border-gray-100 p-5 shadow-[0_10px_25px_rgba(14,116,144,0.15)] hover:shadow-[0_20px_60px_rgba(14,116,144,0.35)] transition-all duration-300"
                     >
                         {/* Image */}
                         <div className="relative h-[200px] w-full overflow-hidden">
@@ -59,14 +76,16 @@ const AllAppointment = async ({ searchParams }) => {
                                 ⭐ {doctor.rating || "4.5"}
                             </div>
 
-                            <div className="absolute bottom-3 left-3 outline outline-yellow-500 text-yellow-500 text-xs px-3 py-1 rounded-full shadow">
+                            <div
+                                className="absolute bottom-3 left-3 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-cyan-100  text-cyan-700 text-[11px] sm:text-xs font-semibold tracking-wide shadow-[0_6px_20px_rgba(14,116,144,0.18)] transition-all duration-300 group-hover:bg-cyan-50"
+                            >
                                 {doctor.specialty}
                             </div>
                         </div>
 
                         {/* Content */}
                         <div className="p-5 flex flex-col gap-2">
-                            <h2 className="text-lg font-semibold text-gray-800 group-hover:text-blue-600">
+                            <h2 className="text-lg font-semibold text-gray-800 group-hover:text-cyan-600 ">
                                 {doctor.name}
                             </h2>
 
@@ -96,7 +115,7 @@ const AllAppointment = async ({ searchParams }) => {
                                 </div>
 
                                 <Link href={`/All-Appointments/${doctor._id}`}>
-                                    <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-4 py-2">
+                                    <Button className="px-5 py-2 bg-cyan-600 text-white rounded-xl shadow-md hover:bg-cyan-700 transition">
                                         View Details
                                     </Button>
                                 </Link>

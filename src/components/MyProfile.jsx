@@ -32,10 +32,7 @@ const MyProfilePage = () => {
         image: form.image,
       });
 
-      if (error) {
-        console.log(error);
-        return;
-      }
+      if (error) return;
 
       setUser((prev) => ({
         ...prev,
@@ -52,14 +49,15 @@ const MyProfilePage = () => {
   if (!user) return <p className="text-center mt-10">Loading...</p>;
 
   return (
-    <div className=" bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-10 flex justify-center">
-        <div className="w-full max-w-4xl">
+    <div className="bg-gradient-to-br from-cyan-50 via-white to-blue-50 px-4 py-10 flex justify-center">
+
+      <div className="w-full max-w-4xl">
 
         {/* PROFILE CARD */}
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
 
-          {/* COVER */}
-          <div className="h-44 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600"></div>
+          {/* COVER (medical theme) */}
+          <div className="h-44 bg-gradient-to-r from-cyan-600 via-blue-600 to-teal-500"></div>
 
           <div className="px-8 pb-10">
 
@@ -84,43 +82,45 @@ const MyProfilePage = () => {
                     {user.name}
                   </h1>
 
-                  <p className="text-black mb-5">{user.email}</p>
+                  <p className="text-gray-500 mb-5">{user.email}</p>
 
-                  <span className="inline-block mt-3 px-4 py-1 text-sm rounded-full bg-green-100 text-green-700 font-medium">
+                  <span className="inline-block mt-3 px-4 py-1 text-sm rounded-full bg-cyan-100 text-cyan-700 font-medium">
                     Active Member
                   </span>
                 </div>
+
               </div>
 
               {/* BUTTON */}
               <button
                 onClick={() => setIsOpen(true)}
-                className="px-5 py-2 bg-indigo-600 text-white rounded-xl shadow-md hover:bg-indigo-700 transition"
+                className="px-5 py-2 bg-cyan-600 text-white rounded-xl shadow-md hover:bg-cyan-700 transition"
               >
                 Edit Profile
               </button>
+
             </div>
 
             {/* INFO CARDS */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
 
-              <div className="bg-gray-50 border rounded-2xl p-5 shadow-sm">
+              <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
                 <h3 className="text-gray-500 text-sm">Full Name</h3>
                 <p className="text-lg font-semibold mt-1 text-gray-800">
                   {user.name}
                 </p>
               </div>
 
-              <div className="bg-gray-50 border rounded-2xl p-5 shadow-sm">
+              <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
                 <h3 className="text-gray-500 text-sm">Email</h3>
                 <p className="text-lg font-semibold mt-1 text-gray-800 break-all">
                   {user.email}
                 </p>
               </div>
 
-              <div className="bg-gray-50 border rounded-2xl p-5 shadow-sm">
+              <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
                 <h3 className="text-gray-500 text-sm">Status</h3>
-                <p className="text-lg font-semibold mt-1 text-green-600">
+                <p className="text-lg font-semibold mt-1 text-cyan-600">
                   Verified
                 </p>
               </div>
@@ -133,37 +133,34 @@ const MyProfilePage = () => {
 
       {/* MODAL */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
 
-          <div className="bg-white p-6 rounded-2xl w-[420px] shadow-2xl">
+          <div className="bg-white p-6 rounded-2xl w-[420px] shadow-2xl border border-gray-100">
 
             <h2 className="text-2xl font-bold mb-5 text-gray-800">
               Edit Profile
             </h2>
 
-            {/* NAME */}
             <input
               type="text"
               value={form.name}
               onChange={(e) =>
                 setForm({ ...form, name: e.target.value })
               }
-              className="border p-3 w-full rounded-xl mb-4 outline-none focus:ring-2 focus:ring-indigo-500"
+              className="border p-3 w-full rounded-xl mb-4 outline-none focus:ring-2 focus:ring-cyan-500"
               placeholder="Your Name"
             />
 
-            {/* IMAGE */}
             <input
               type="text"
               value={form.image}
               onChange={(e) =>
                 setForm({ ...form, image: e.target.value })
               }
-              className="border p-3 w-full rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"
+              className="border p-3 w-full rounded-xl outline-none focus:ring-2 focus:ring-cyan-500"
               placeholder="Image URL"
             />
 
-            {/* BUTTONS */}
             <div className="flex justify-end gap-3 mt-6">
 
               <button
@@ -175,7 +172,7 @@ const MyProfilePage = () => {
 
               <button
                 onClick={handleSave}
-                className="px-5 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700"
+                className="px-5 py-2 bg-cyan-600 text-white rounded-xl hover:bg-cyan-700"
               >
                 Save Changes
               </button>
@@ -183,8 +180,10 @@ const MyProfilePage = () => {
             </div>
 
           </div>
+
         </div>
       )}
+
     </div>
   );
 };

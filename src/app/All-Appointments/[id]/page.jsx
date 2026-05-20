@@ -6,7 +6,6 @@ import {
   Clock3,
   Building2,
   Star,
-  CalendarDays,
   ShieldCheck,
   BadgeCheck,
   HeartPulse,

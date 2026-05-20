@@ -13,7 +13,7 @@ import { Stethoscope } from "lucide-react";
 
 const slides = [
     {
-        image: "/HeroDoctor.png",
+        image: "/doctorHero.jpg",
         title: "Meet The Best Doctor",
         subtitle: "Professional Healthcare",
         desc: "Great doctor if you need your family member to get effective immediate assistance, emergency treatment or a simple consultation.",
@@ -92,7 +92,7 @@ const BannerPage = () => {
 
                                             <div className="mt-6">
                                                 <Link href="/dashboard">
-                                                    <button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md font-semibold shadow-lg transition">
+                                                    <button className="px-5 py-2 bg-cyan-600 text-white rounded-xl shadow-md hover:bg-cyan-700 transition">
                                                         Make Appointment
                                                     </button>
                                                 </Link>
@@ -126,7 +126,7 @@ const BannerPage = () => {
                         <p className="text-sm text-gray-500 mt-2">
                             Immediate medical help and emergency support anytime.
                         </p>
-                        <p className="text-blue-600 mt-4 text-sm cursor-pointer">
+                        <p className="text-cyan-700 mt-4 text-sm cursor-pointer">
                             Read More →
                         </p>
                     </div>
@@ -139,7 +139,7 @@ const BannerPage = () => {
                         <p className="text-sm text-gray-500 mt-2">
                             View doctor schedules and book appointments easily.
                         </p>
-                        <p className="text-blue-600 mt-4 text-sm cursor-pointer">
+                        <p className="text-cyan-700 mt-4 text-sm cursor-pointer">
                             Read More →
                         </p>
                     </div>
@@ -156,7 +156,7 @@ const BannerPage = () => {
                             <p>Sunday <span className="float-right">8.00 - 14.00</span></p>
                         </div>
 
-                        <p className="text-blue-600 mt-4 text-sm cursor-pointer">
+                        <p className="text-cyan-700 mt-4 text-sm cursor-pointer">
                             Read More →
                         </p>
                     </div>

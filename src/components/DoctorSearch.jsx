@@ -33,7 +33,7 @@ const DoctorSearch = () => {
 
             <Button
                 onClick={handleSearch}
-                className="bg-blue-600 text-white"
+                className="px-5 py-2 bg-cyan-600 text-white rounded-xl shadow-md hover:bg-cyan-700 transition"
             >
                 <Search size={18} />
                 Search

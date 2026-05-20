@@ -28,8 +28,8 @@ const NavBarPage = () => {
 
     const navLinkClass = (path) =>
         `transition font-medium ${pathname === path
-            ? "text-blue-600 border-b-2 border-blue-600 pb-1"
-            : "hover:text-blue-600"
+            ? "text-cyan-700 border-b-2 border-cyan-600 pb-1"
+            : "hover:text-cyan-600"
         }`;
 
     const links = (
@@ -98,7 +98,7 @@ const NavBarPage = () => {
                             </div>
                         ) : user ? (
                             <>
-                                <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-blue-500">
+                                <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-cyan-500">
                                     <Image
                                         src={user?.image}
                                         alt="user"
