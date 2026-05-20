@@ -19,7 +19,7 @@ const FeaturePage = async () => {
   const doctors = await res.json();
 
   return (
-    <div className="container mx-auto bg-gradient-to-br from-blue-50 via-white to-purple-50 p-6 rounded-3xl">
+    <div className="container mx-auto bg-gradient-to-br from-blue-50 via-white to-purple-50 p-6 rounded-3xl ">
 
       {/* Header */}
       <div className="mb-10 text-center">

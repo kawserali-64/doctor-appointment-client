@@ -9,157 +9,164 @@ import { Autoplay, Pagination, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import { Stethoscope } from "lucide-react";
 
 const slides = [
     {
         image: "/HeroDoctor.png",
-        title: "Advanced Medical Care For Every Patient",
-        subtitle: "World-Class Healthcare Service",
-        desc: "Experience trusted healthcare with highly qualified doctors, modern medical facilities, and seamless appointment booking anytime.",
+        title: "Meet The Best Doctor",
+        subtitle: "Professional Healthcare",
+        desc: "Great doctor if you need your family member to get effective immediate assistance, emergency treatment or a simple consultation.",
     },
-
     {
         image: "/doctor2.jpg",
-        title: "Dedicated Specialists You Can Trust",
-        subtitle: "Professional Medical Experts",
-        desc: "Connect with experienced doctors across multiple specialties and receive personalized treatment with compassionate care.",
+        title: "Trusted Medical Experts",
+        subtitle: "Specialist Doctors",
+        desc: "Get high-quality treatment from experienced doctors with modern healthcare solutions.",
     },
-
     {
         image: "/doctor3.jpg",
-        title: "Your Health Journey Starts Here",
-        subtitle: "Modern Healthcare Platform",
-        desc: "Book appointments instantly, manage your consultations, and access quality healthcare services from anywhere.",
+        title: "Advanced Healthcare System",
+        subtitle: "Modern Medicine",
+        desc: "Book appointments instantly and get reliable treatment from top medical professionals.",
     },
-
     {
         image: "/doctor4.jpg",
-        title: "Healthcare Excellence With Innovation",
-        subtitle: "24/7 Patient Support",
-        desc: "Providing exceptional medical support with advanced technology, patient-focused treatment, and reliable healthcare solutions.",
+        title: "Care You Can Trust",
+        subtitle: "24/7 Support",
+        desc: "We provide continuous healthcare support with experienced doctors and advanced facilities.",
     },
 ];
 
 const BannerPage = () => {
     return (
-        <div className="relative w-full h-screen overflow-hidden">
+        <div className="w-full">
 
-            <Swiper
-                modules={[Autoplay, Pagination, EffectFade]}
-                effect="fade"
-                autoplay={{
-                    delay: 4500,
-                    disableOnInteraction: false,
-                }}
-                pagination={{
-                    clickable: true,
-                }}
-                loop={true}
-                className="h-full"
-            >
-                {slides.map((slide, index) => (
-                    <SwiperSlide key={index}>
-                        <div className="relative h-screen w-full">
+            {/* ================= HERO ================= */}
+            <div className="relative w-full h-screen overflow-hidden">
 
-                            {/* Background Image */}
-                            <Image
-                                src={slide.image}
-                                alt="doctor"
-                                fill
-                                priority
-                                className="object-cover"
-                            />
+                <Swiper
+                    modules={[Autoplay, Pagination, EffectFade]}
+                    effect="fade"
+                    autoplay={{ delay: 4000, disableOnInteraction: false }}
+                    pagination={{ clickable: true }}
+                    loop
+                    className="h-full"
+                >
+                    {slides.map((slide, index) => (
+                        <SwiperSlide key={index}>
+                            <div className="relative w-full h-screen">
 
-                            {/* Premium Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#00111A]/95 via-[#00111A]/80 to-[#00111A]/40"></div>
+                                <Image
+                                    src={slide.image}
+                                    alt="doctor"
+                                    fill
+                                    priority
+                                    className="object-cover"
+                                />
 
-                            {/* Light Gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                                <div className="absolute inset-0 bg-blue-900/60" />
 
-                            {/* Main Content */}
-                            <div className="relative z-20 h-full flex items-center">
-                                <div className="max-w-7xl mx-auto w-full px-6 lg:px-12">
+                                <div className="relative z-20 flex items-center h-full">
+                                    <div className="max-w-7xl mx-auto w-full px-5 sm:px-6 lg:px-12">
 
-                                    <div className="max-w-3xl">
+                                        <div className="max-w-xl text-white">
 
-                                        {/* Small Top Text */}
-                                        <div className="inline-flex items-center gap-3 mb-6">
-                                            <div className="w-12 h-[2px] bg-cyan-400"></div>
+                                            <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10">
 
-                                            <p className="uppercase tracking-[4px] text-cyan-300 text-sm font-medium">
-                                                {slide.subtitle}
+                                                <Stethoscope className="w-4 h-4 text-cyan-400" />
+
+                                                <span className="text-cyan-200 text-xs sm:text-sm tracking-[3px] uppercase font-medium">
+                                                    {slide.subtitle}
+                                                </span>
+
+                                            </div>
+
+                                            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                                                {slide.title}
+                                            </h1>
+
+                                            <p className="mt-4 text-sm sm:text-base md:text-lg text-gray-200">
+                                                {slide.desc}
                                             </p>
-                                        </div>
 
-                                        {/* Main Heading */}
-                                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight text-white">
-                                            {slide.title}
-                                        </h1>
-
-                                        {/* Description */}
-                                        <p className="mt-7 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl">
-                                            {slide.desc}
-                                        </p>
-
-                                        {/* Buttons */}
-                                        <div className="flex flex-wrap gap-5 mt-10">
-
-                                            <Link href="/All-Appointments">
-                                                <button className="bg-cyan-500 hover:bg-cyan-600 transition-all duration-300 text-white px-8 py-4 rounded-xl font-semibold shadow-2xl hover:scale-105">
-                                                    Find Doctors
-                                                </button>
-                                            </Link>
-
-                                            <Link href="/dashboard">
-                                                <button className="border border-white/20 bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all duration-300 text-white px-8 py-4 rounded-xl font-semibold">
-                                                    Book Appointment
-                                                </button>
-                                            </Link>
-                                        </div>
-
-                                        {/* Feature Boxes */}
-                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-16">
-
-                                            <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
-                                                <h2 className="text-3xl font-bold text-cyan-400">
-                                                    500+
-                                                </h2>
-
-                                                <p className="text-gray-300 mt-2 text-sm">
-                                                    Experienced Doctors
-                                                </p>
+                                            <div className="mt-6">
+                                                <Link href="/dashboard">
+                                                    <button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md font-semibold shadow-lg transition">
+                                                        Make Appointment
+                                                    </button>
+                                                </Link>
                                             </div>
 
-                                            <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
-                                                <h2 className="text-3xl font-bold text-cyan-400">
-                                                    24/7
-                                                </h2>
+                                            <p className="text-xs mt-2 text-gray-300">
+                                                T&C apply. Please read Terms and Conditions
+                                            </p>
 
-                                                <p className="text-gray-300 mt-2 text-sm">
-                                                    Emergency Support
-                                                </p>
-                                            </div>
-
-                                            <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
-                                                <h2 className="text-3xl font-bold text-cyan-400">
-                                                    10K+
-                                                </h2>
-
-                                                <p className="text-gray-300 mt-2 text-sm">
-                                                    Happy Patients
-                                                </p>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Bottom Shadow */}
-                            <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#000814] to-transparent"></div>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+
+            </div>
+
+            {/* ================= FEATURE CARDS (OVERLAP STYLE) ================= */}
+            <div className="relative z-30 -mt-20 sm:-mt-28 px-4 sm:px-6 lg:px-12">
+
+                <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    {/* Card 1 */}
+                    <div className="bg-white rounded-xl shadow-xl p-6">
+                        <h3 className="font-semibold text-gray-800">
+                            Emergency Cases
+                        </h3>
+                        <p className="text-sm text-gray-500 mt-2">
+                            Immediate medical help and emergency support anytime.
+                        </p>
+                        <p className="text-blue-600 mt-4 text-sm cursor-pointer">
+                            Read More →
+                        </p>
+                    </div>
+
+                    {/* Card 2 */}
+                    <div className="bg-white rounded-xl shadow-xl p-6">
+                        <h3 className="font-semibold text-gray-800">
+                            Doctors Timetable
+                        </h3>
+                        <p className="text-sm text-gray-500 mt-2">
+                            View doctor schedules and book appointments easily.
+                        </p>
+                        <p className="text-blue-600 mt-4 text-sm cursor-pointer">
+                            Read More →
+                        </p>
+                    </div>
+
+                    {/* Card 3 */}
+                    <div className="bg-white rounded-xl shadow-xl p-6">
+                        <h3 className="font-semibold text-gray-800">
+                            Opening Hours
+                        </h3>
+
+                        <div className="text-sm text-gray-600 mt-2 space-y-1">
+                            <p>Monday - Friday <span className="float-right">8.00 - 20.00</span></p>
+                            <p>Saturday <span className="float-right">8.00 - 18.00</span></p>
+                            <p>Sunday <span className="float-right">8.00 - 14.00</span></p>
                         </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+
+                        <p className="text-blue-600 mt-4 text-sm cursor-pointer">
+                            Read More →
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            {/* Bottom spacing (important for layout breathing) */}
+            <div className="h-20 sm:h-28"></div>
+
         </div>
     );
 };
