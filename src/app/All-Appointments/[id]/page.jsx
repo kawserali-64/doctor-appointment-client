@@ -30,8 +30,8 @@ const DoctorDetailsPage = async ({ params }) => {
   const doctor = await res.json();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50 to-white p-5 md:p-10">
-      <Card className="max-w-7xl mx-auto rounded-[35px] border border-white/50 bg-white/80 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.08)] overflow-hidden">
+    <div className="container mx-auto">
+      <Card className="max-w-7xl mx-auto mt-5 mb-5 shadow-2xl rounded-3xl border border-gray-100">
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 p-6 md:p-10">
 

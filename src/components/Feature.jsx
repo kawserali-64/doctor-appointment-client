@@ -1,5 +1,6 @@
 import { Button, Card } from "@heroui/react";
 import {
+  CircleDollarSign,
   Hospital,
   LocationEdit,
   TimerResetIcon,
@@ -18,7 +19,7 @@ const FeaturePage = async () => {
   const doctors = await res.json();
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 via-white to-purple-50 p-6 rounded-3xl">
+    <div className="container mx-auto bg-gradient-to-br from-blue-50 via-white to-purple-50 p-6 rounded-3xl">
 
       {/* Header */}
       <div className="mb-10 text-center">
@@ -44,7 +45,7 @@ const FeaturePage = async () => {
                 src={doctor.image}
                 alt={doctor.name}
                 fill
-                className="object-cover group-hover:scale-110 transition-transform duration-500"
+                className="object-cover group-hover:scale-110 transition-transform duration-500 rounded-xl"
               />
 
               {/* gradient overlay */}
@@ -56,7 +57,7 @@ const FeaturePage = async () => {
               </div>
 
               {/* specialty badge */}
-              <div className="absolute bottom-3 left-3 bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow">
+              <div className="absolute bottom-3 left-3 outline outline-yellow-500 text-yellow-500 text-xs px-3 py-1 rounded-full shadow">
                 {doctor.specialty}
               </div>
             </div>
@@ -100,8 +101,8 @@ const FeaturePage = async () => {
               <div className="flex items-center justify-between">
 
                 {/* fee */}
-                <div className="text-sm font-semibold text-green-600 bg-green-50 px-3 py-1 rounded-full">
-                  💰 ৳ {doctor.fee}
+                <div className="flex items-center gap-1 text-sm font-semibold text-green-600 bg-green-50 px-3 py-1 rounded-full">
+                   <CircleDollarSign size={16} /> {doctor.fee}
                 </div>
 
                 {/* button */}

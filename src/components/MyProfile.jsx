@@ -84,7 +84,7 @@ const MyProfilePage = () => {
                     {user.name}
                   </h1>
 
-                  <p className="text-gray-600 mt-1">{user.email}</p>
+                  <p className="text-black mb-5">{user.email}</p>
 
                   <span className="inline-block mt-3 px-4 py-1 text-sm rounded-full bg-green-100 text-green-700 font-medium">
                     Active Member

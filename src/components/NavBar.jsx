@@ -4,12 +4,15 @@ import { authClient } from "@/lib/auth-client";
 import { Avatar } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const NavBarPage = () => {
     const { data: session, isPending } = authClient.useSession();
     const user = session?.user;
+
+    const pathname = usePathname();
 
     const [isOpen, setIsOpen] = useState(false);
     const [logoutLoading, setLogoutLoading] = useState(false);
@@ -23,10 +26,16 @@ const NavBarPage = () => {
         }
     };
 
+    const navLinkClass = (path) =>
+        `transition font-medium ${pathname === path
+            ? "text-blue-600 border-b-2 border-blue-600 pb-1"
+            : "hover:text-blue-600"
+        }`;
+
     const links = (
         <>
             <li>
-                <Link href="/" className="hover:text-blue-600 transition">
+                <Link href="/" className={navLinkClass("/")}>
                     Home
                 </Link>
             </li>
@@ -34,7 +43,7 @@ const NavBarPage = () => {
             <li>
                 <Link
                     href="/All-Appointments"
-                    className="hover:text-blue-600 transition"
+                    className={navLinkClass("/All-Appointments")}
                 >
                     All Appointments
                 </Link>
@@ -43,7 +52,7 @@ const NavBarPage = () => {
             <li>
                 <Link
                     href="/dashboard"
-                    className="hover:text-blue-600 transition"
+                    className={navLinkClass("/dashboard")}
                 >
                     Dashboard
                 </Link>
@@ -60,18 +69,17 @@ const NavBarPage = () => {
                     <Link href="/" className="flex items-center gap-3">
                         <div className="w-[50px] h-[50px] rounded-full overflow-hidden border-2 border-blue-500">
                             <Image
-                                src="/doctor.png"
-                                alt="logo"
+                                src="/doctor.svg"
+                                alt="Doctor App Logo"
                                 width={50}
                                 height={50}
                             />
                         </div>
 
                         <div>
-                            <h1 className="font-bold text-2xl">MyApp</h1>
-                            <p className="text-xs text-gray-500">
+                            <h1 className="font-bold text-2xl">
                                 Doctor Appointment
-                            </p>
+                            </h1>
                         </div>
                     </Link>
 
@@ -83,7 +91,6 @@ const NavBarPage = () => {
                     {/* AUTH (DESKTOP) */}
                     <div className="hidden md:flex items-center gap-4">
 
-                        {/* 🔥 LOADING STATE */}
                         {isPending ? (
                             <div className="flex items-center gap-2">
                                 <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" />
@@ -106,7 +113,9 @@ const NavBarPage = () => {
                                     disabled={logoutLoading}
                                     className="px-5 py-2 rounded-xl bg-red-500 text-white"
                                 >
-                                    {logoutLoading ? "Logging out..." : "Logout"}
+                                    {logoutLoading
+                                        ? "Logging out..."
+                                        : "Logout"}
                                 </button>
                             </>
                         ) : (
@@ -160,6 +169,7 @@ const NavBarPage = () => {
                                                 <h2 className="font-semibold">
                                                     {user?.name}
                                                 </h2>
+
                                                 <p className="text-sm text-gray-500">
                                                     {user?.email}
                                                 </p>
