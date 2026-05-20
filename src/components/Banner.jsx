@@ -42,8 +42,7 @@ const BannerPage = () => {
     return (
         <div className="w-full">
 
-            {/* ================= HERO ================= */}
-            <div className="relative w-full h-screen overflow-hidden">
+            <div className="relative w-full h-[70vh] sm:h-[80vh] md:h-screen overflow-hidden">
 
                 <Swiper
                     modules={[Autoplay, Pagination, EffectFade]}
@@ -55,19 +54,20 @@ const BannerPage = () => {
                 >
                     {slides.map((slide, index) => (
                         <SwiperSlide key={index}>
-                            <div className="relative w-full h-screen">
+                            <div className="relative w-full h-full">
 
                                 <Image
                                     src={slide.image}
                                     alt="doctor"
                                     fill
                                     priority
-                                    className="object-cover"
+                                    className="object-cover object-center"
                                 />
 
-                                <div className="absolute inset-0 bg-blue-900/60" />
+                                <div className="absolute inset-0 bg-blue-900/60 dark:bg-black/70" />
 
                                 <div className="relative z-20 flex items-center h-full">
+
                                     <div className="max-w-7xl mx-auto w-full px-5 sm:px-6 lg:px-12">
 
                                         <div className="max-w-xl text-white">
@@ -92,7 +92,7 @@ const BannerPage = () => {
 
                                             <div className="mt-6">
                                                 <Link href="/dashboard">
-                                                    <button className="px-5 py-2 bg-cyan-600 text-white rounded-xl shadow-md hover:bg-cyan-700 transition">
+                                                    <button className="px-5 py-2 bg-cyan-600 dark:bg-cyan-500 text-white rounded-xl shadow-md hover:bg-cyan-700 dark:hover:bg-cyan-600 transition">
                                                         Make Appointment
                                                     </button>
                                                 </Link>
@@ -113,59 +113,40 @@ const BannerPage = () => {
 
             </div>
 
-            {/* ================= FEATURE CARDS (OVERLAP STYLE) ================= */}
-            <div className="relative z-30 -mt-20 sm:-mt-28 px-4 sm:px-6 lg:px-12">
+            <div className="relative z-30 -mt-16 sm:-mt-24 px-4 sm:px-6 lg:px-12">
 
                 <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                    {/* Card 1 */}
-                    <div className="bg-white rounded-xl shadow-xl p-6">
-                        <h3 className="font-semibold text-gray-800">
-                            Emergency Cases
-                        </h3>
+                    <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-xl p-6">
+                        <h3 className="font-semibold">Emergency Cases</h3>
                         <p className="text-sm text-gray-500 mt-2">
-                            Immediate medical help and emergency support anytime.
-                        </p>
-                        <p className="text-cyan-700 mt-4 text-sm cursor-pointer">
-                            Read More →
+                            Immediate medical help anytime.
                         </p>
                     </div>
 
-                    {/* Card 2 */}
-                    <div className="bg-white rounded-xl shadow-xl p-6">
-                        <h3 className="font-semibold text-gray-800">
-                            Doctors Timetable
-                        </h3>
+                    <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-xl p-6">
+                        <h3 className="font-semibold">Doctors Timetable</h3>
                         <p className="text-sm text-gray-500 mt-2">
-                            View doctor schedules and book appointments easily.
-                        </p>
-                        <p className="text-cyan-700 mt-4 text-sm cursor-pointer">
-                            Read More →
+                            View schedules and book easily.
                         </p>
                     </div>
 
-                    {/* Card 3 */}
-                    <div className="bg-white rounded-xl shadow-xl p-6">
-                        <h3 className="font-semibold text-gray-800">
-                            Opening Hours
-                        </h3>
+                    <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-xl p-6">
+
+                        <h3 className="font-semibold">Opening Hours</h3>
 
                         <div className="text-sm text-gray-600 mt-2 space-y-1">
-                            <p>Monday - Friday <span className="float-right">8.00 - 20.00</span></p>
-                            <p>Saturday <span className="float-right">8.00 - 18.00</span></p>
-                            <p>Sunday <span className="float-right">8.00 - 14.00</span></p>
+                            <p>Mon-Fri <span className="float-right">8-20</span></p>
+                            <p>Sat <span className="float-right">8-18</span></p>
+                            <p>Sun <span className="float-right">8-14</span></p>
                         </div>
 
-                        <p className="text-cyan-700 mt-4 text-sm cursor-pointer">
-                            Read More →
-                        </p>
                     </div>
 
                 </div>
             </div>
 
-            {/* Bottom spacing (important for layout breathing) */}
-            <div className="h-20 sm:h-28"></div>
+            <div className="h-16 sm:h-24"></div>
 
         </div>
     );

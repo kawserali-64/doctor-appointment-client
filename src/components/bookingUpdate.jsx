@@ -11,14 +11,10 @@ export function BookingUpdate({
     currentTime,
 }) {
 
-    // ✅ state
-    const [appointmentDate, setAppointmentDate] =
-        useState(currentDate || "");
+    const [appointmentDate, setAppointmentDate] = useState(currentDate || "");
+    const [appointmentTime, setAppointmentTime] = useState(currentTime || "");
+    const [loading, setLoading] = useState(false);
 
-    const [appointmentTime, setAppointmentTime] =
-        useState(currentTime || "");
-
-    // ✅ sync state when props change
     useEffect(() => {
         setAppointmentDate(currentDate || "");
         setAppointmentTime(currentTime || "");
@@ -26,7 +22,9 @@ export function BookingUpdate({
 
     const handleUpdate = async () => {
         try {
-            const { data: tokenData, } = await authClient.token();
+            setLoading(true);
+
+            const { data: tokenData } = await authClient.token();
 
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${bookingId}`,
@@ -34,7 +32,7 @@ export function BookingUpdate({
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${tokenData.token}`,
+                        Authorization: `Bearer ${tokenData.token}`,
                     },
                     body: JSON.stringify({
                         appointmentDate,
@@ -47,47 +45,46 @@ export function BookingUpdate({
 
             console.log(data);
 
-            if (data.modifiedCount > 0) {
+            if (data?.modifiedCount > 0 || data?.success) {
                 toast.success("Booking updated successfully!");
+            } else {
+                toast.error("Update failed!");
             }
 
         } catch (err) {
             console.log(err);
             toast.error("Failed to update booking.");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <AlertDialog>
 
-            {/* OPEN BUTTON */}
             <AlertDialog.Trigger>
                 <button className="px-3 py-1 text-xs rounded bg-blue-500 text-white hover:bg-blue-600">
                     Update
                 </button>
             </AlertDialog.Trigger>
 
-            {/* MODAL */}
             <AlertDialog.Backdrop>
                 <AlertDialog.Container>
 
-                    <AlertDialog.Dialog className="sm:max-w-[400px]">
+                    <AlertDialog.Dialog className="sm:max-w-[400px] bg-white dark:bg-zinc-900 text-black dark:text-white rounded-xl border dark:border-zinc-800">
 
                         <AlertDialog.CloseTrigger />
 
-                        {/* HEADER */}
                         <AlertDialog.Header>
-                            <AlertDialog.Heading>
+                            <AlertDialog.Heading className="dark:text-white">
                                 Update Booking
                             </AlertDialog.Heading>
                         </AlertDialog.Header>
 
-                        {/* BODY */}
                         <AlertDialog.Body>
 
-                            {/* DATE */}
                             <div className="mb-3">
-                                <label className="block text-sm mb-1">
+                                <label className="block text-sm mb-1 text-gray-700 dark:text-gray-300">
                                     Appointment Date
                                 </label>
 
@@ -95,17 +92,14 @@ export function BookingUpdate({
                                     type="date"
                                     value={appointmentDate || ""}
                                     onChange={(e) =>
-                                        setAppointmentDate(
-                                            e.target.value
-                                        )
+                                        setAppointmentDate(e.target.value)
                                     }
-                                    className="border p-2 w-full rounded"
+                                    className="border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-black dark:text-white p-2 w-full rounded focus:ring-2 focus:ring-cyan-500 outline-none"
                                 />
                             </div>
 
-                            {/* TIME */}
                             <div>
-                                <label className="block text-sm mb-1">
+                                <label className="block text-sm mb-1 text-gray-700 dark:text-gray-300">
                                     Appointment Time
                                 </label>
 
@@ -113,22 +107,20 @@ export function BookingUpdate({
                                     type="time"
                                     value={appointmentTime || ""}
                                     onChange={(e) =>
-                                        setAppointmentTime(
-                                            e.target.value
-                                        )
+                                        setAppointmentTime(e.target.value)
                                     }
-                                    className="border p-2 w-full rounded"
+                                    className="border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-black dark:text-white p-2 w-full rounded focus:ring-2 focus:ring-cyan-500 outline-none"
                                 />
                             </div>
 
                         </AlertDialog.Body>
 
-                        {/* FOOTER */}
                         <AlertDialog.Footer>
 
                             <Button
                                 slot="close"
                                 variant="tertiary"
+                                className="dark:text-white"
                             >
                                 Cancel
                             </Button>
@@ -137,8 +129,9 @@ export function BookingUpdate({
                                 slot="close"
                                 color="primary"
                                 onClick={handleUpdate}
+                                isDisabled={loading}
                             >
-                                Save Changes
+                                {loading ? "Saving..." : "Save Changes"}
                             </Button>
 
                         </AlertDialog.Footer>

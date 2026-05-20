@@ -3,6 +3,7 @@ import "./globals.css";
 import NavBarPage from "@/components/NavBar";
 import FooterPage from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
+import Providers from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,13 +24,16 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <NavBarPage />
-        {children}
-        <FooterPage />
-        <Toaster />
+      <body className="min-h-full flex flex-col bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
+        <Providers>
+          <NavBarPage />
+          {children}
+          <FooterPage />
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

@@ -1,4 +1,4 @@
-import { Button, Card } from "@heroui/react";
+import { Card } from "@heroui/react";
 import Image from "next/image";
 import {
   BriefcaseMedical,
@@ -9,279 +9,237 @@ import {
   ShieldCheck,
   BadgeCheck,
   HeartPulse,
+  CalendarDays,
 } from "lucide-react";
+
 import BookingCardPage from "@/components/BookingCard";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
+export async function generateMetadata({ params }) {
+  return {
+    title: "Doctor Details",
+  };
+}
+
 const DoctorDetailsPage = async ({ params }) => {
   const { id } = await params;
-  const {token }= await auth.api.getToken({
-    headers:await headers(),
+
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
   });
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/doctors/${id}`,{
-    headers: {
-      authorization: `Bearer ${token}`
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/doctors/${id}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
     }
-  });
+  );
 
   const doctor = await res.json();
 
   return (
-    <div className="container mx-auto">
-      <Card className="max-w-7xl mx-auto mt-5 mb-5 shadow-2xl rounded-3xl border border-gray-100">
+    <div className="bg-white dark:bg-zinc-950 min-h-screen py-6 sm:py-10 px-4 sm:px-6 lg:px-10 transition-colors">
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 p-6 md:p-10">
+      <div className="max-w-7xl mx-auto">
 
-          {/* LEFT SIDE */}
-          <div className="relative">
+        <Card
+          className="
+          overflow-hidden
+          rounded-[35px]
+          border border-gray-100 dark:border-zinc-800
+          bg-white dark:bg-zinc-900
+          shadow-[0_20px_80px_rgba(14,116,144,0.15)]
+          "
+        >
 
-            {/* image */}
-            <div className="relative h-[500px] rounded-[30px] overflow-hidden group shadow-xl">
-              <Image
-                src={doctor.image}
-                alt={doctor.name}
-                fill
-                className="object-cover group-hover:scale-105 transition duration-700"
-              />
+          <div className="grid grid-cols-1 lg:grid-cols-12">
 
-              {/* overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent"></div>
-            </div>
+            <div className="lg:col-span-5 relative bg-gradient-to-br from-cyan-50 to-white dark:from-zinc-900 dark:to-zinc-900 p-5 sm:p-8">
 
-            {/* floating review card */}
-            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md shadow-2xl rounded-3xl px-6 py-4 flex items-center gap-6 border border-white/50">
+              <div className="relative h-[360px] sm:h-[650px] rounded-[30px] overflow-hidden">
 
-              <div className="flex items-center gap-2">
-                <Star
-                  className="text-yellow-500 fill-yellow-400"
-                  size={24}
+                <Image
+                  src={doctor.image}
+                  alt={doctor.name}
+                  fill
+                  className="object-cover hover:scale-105 transition duration-700"
                 />
 
-                <div>
-                  <h2 className="font-bold text-slate-800 text-lg">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+
+                <div className="absolute top-5 left-5 bg-white/90 dark:bg-zinc-800/90 backdrop-blur-xl border border-gray-100 dark:border-zinc-700 rounded-full px-4 py-2 shadow-xl flex items-center gap-2">
+
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
+
+                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                    Available For Appointment
+                  </span>
+
+                </div>
+
+                <div className="absolute bottom-5 left-5 bg-cyan-600 text-white px-5 py-2 rounded-full text-sm font-semibold shadow-2xl">
+                  {doctor.specialty}
+                </div>
+
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mt-5">
+
+                <div className="bg-white dark:bg-zinc-900 rounded-3xl p-5 border border-gray-100 dark:border-zinc-800 shadow-[0_10px_35px_rgba(14,116,144,0.12)]">
+
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Rating</p>
+
+                  <h2 className="text-3xl font-black text-gray-800 dark:text-white mt-1">
                     {doctor.rating}
                   </h2>
-                  <p className="text-xs text-gray-400">
-                    120+ Reviews
-                  </p>
+
+                  <Star className="text-yellow-500 fill-yellow-400 mt-2" />
                 </div>
+
+                <div className="bg-white dark:bg-zinc-900 rounded-3xl p-5 border border-gray-100 dark:border-zinc-800 shadow-[0_10px_35px_rgba(14,116,144,0.12)]">
+
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Patients</p>
+
+                  <h2 className="text-3xl font-black text-gray-800 dark:text-white mt-1">
+                    1.2K+
+                  </h2>
+
+                  <HeartPulse className="text-cyan-600 mt-2" />
+                </div>
+
               </div>
 
-              <div className="w-[1px] h-10 bg-gray-200"></div>
-
-              <div>
-                <h2 className="font-bold text-slate-800 text-lg">
-                  1.2k+
-                </h2>
-                <p className="text-xs text-gray-400">
-                  Happy Patients
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT SIDE */}
-          <div className="flex flex-col justify-center pt-6 lg:pt-0">
-
-            {/* specialty */}
-            <div className="mb-4">
-              <span className="bg-cyan-100 text-cyan-700 text-sm font-semibold px-4 py-2 rounded-full shadow-sm">
-                {doctor.specialty}
-              </span>
             </div>
 
-            {/* name */}
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 leading-tight mb-4">
-              {doctor.name}
-            </h1>
+            <div className="lg:col-span-7 p-6 sm:p-10 lg:p-14 flex flex-col justify-center">
 
-            {/* rating */}
-            <div className="flex items-center gap-2 mb-6">
-              <Star
-                size={18}
-                className="text-yellow-500 fill-yellow-400"
-              />
-
-              <span className="font-semibold text-slate-700">
-                {doctor.rating}
-              </span>
-
-              <span className="text-gray-400 text-sm">
-                / 5.0 (128 Reviews)
-              </span>
-            </div>
-
-            {/* description */}
-            <p className="text-gray-500 leading-8 text-[15px] mb-8">
-              Highly experienced specialist dedicated to providing
-              compassionate and patient-centered healthcare with
-              modern treatment methods and advanced medical support.
-            </p>
-
-            {/* INFO BOXES */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
-
-              {/* Experience */}
-              <div className="flex items-center gap-4 bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-lg transition-all duration-300">
-
-                <div className="bg-cyan-100 p-4 rounded-2xl">
-                  <Clock3 className="text-cyan-700" size={22} />
-                </div>
-
-                <div>
-                  <p className="text-xs text-gray-400 mb-1">
-                    Experience
-                  </p>
-
-                  <h3 className="font-bold text-slate-700 text-lg">
-                    {doctor.experience}
-                  </h3>
-                </div>
+              <div className="inline-flex items-center gap-2 bg-cyan-50 dark:bg-zinc-800 text-cyan-700 dark:text-cyan-400 border border-cyan-100 dark:border-zinc-700 rounded-full px-4 py-2 text-sm font-semibold w-fit mb-6">
+                <ShieldCheck size={16} />
+                Trusted Healthcare Specialist
               </div>
 
-              {/* Hospital */}
-              <div className="flex items-center gap-4 bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-lg transition-all duration-300">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-800 dark:text-white leading-tight">
+                {doctor.name}
+              </h1>
 
-                <div className="bg-cyan-100 p-4 rounded-2xl">
-                  <Building2 className="text-cyan-700" size={22} />
-                </div>
-
-                <div>
-                  <p className="text-xs text-gray-400 mb-1">
-                    Hospital
-                  </p>
-
-                  <h3 className="font-bold text-slate-700 text-lg">
-                    {doctor.hospital}
-                  </h3>
-                </div>
+              <div className="flex items-center gap-2 mt-5 text-gray-600 dark:text-gray-300">
+                <Building2 className="text-cyan-600" size={18} />
+                {doctor.hospital}
               </div>
 
-              {/* Location */}
-              <div className="flex items-center gap-4 bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-lg transition-all duration-300">
+              <p className="mt-6 text-gray-600 dark:text-gray-300 leading-8 text-[15px]">
+                Dedicated medical professional delivering advanced healthcare solutions
+                with compassionate patient care and modern treatment systems.
+              </p>
 
-                <div className="bg-cyan-100 p-4 rounded-2xl">
-                  <MapPin className="text-cyan-700" size={22} />
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-10">
 
-                <div>
-                  <p className="text-xs text-gray-400 mb-1">
-                    Location
-                  </p>
+                {[
+                  {
+                    icon: Clock3,
+                    label: "Experience",
+                    value: doctor.experience,
+                  },
+                  {
+                    icon: MapPin,
+                    label: "Location",
+                    value: doctor.location,
+                  },
+                  {
+                    icon: BriefcaseMedical,
+                    label: "Fee",
+                    value: `৳ ${doctor.fee}`,
+                  },
+                  {
+                    icon: BadgeCheck,
+                    label: "Reviews",
+                    value: "128+",
+                  },
+                ].map((item, i) => {
+                  const Icon = item.icon;
+                  return (
+                    <div
+                      key={i}
+                      className="rounded-3xl border border-gray-100 dark:border-zinc-800 bg-cyan-50/40 dark:bg-zinc-800 p-5 shadow-[0_10px_30px_rgba(14,116,144,0.08)]"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="bg-white dark:bg-zinc-900 p-4 rounded-2xl shadow-md">
+                          <Icon className="text-cyan-600" size={22} />
+                        </div>
 
-                  <h3 className="font-bold text-slate-700 text-lg">
-                    {doctor.location}
-                  </h3>
-                </div>
+                        <div>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                            {item.label}
+                          </p>
+                          <h3 className="text-xl font-bold text-gray-800 dark:text-white mt-1">
+                            {item.value}
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+
               </div>
 
-              {/* Fee */}
-              <div className="flex items-center gap-4 bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-lg transition-all duration-300">
-
-                <div className="bg-cyan-100 p-4 rounded-2xl">
-                  <BriefcaseMedical
-                    className="text-cyan-700"
-                    size={22}
-                  />
-                </div>
-
-                <div>
-                  <p className="text-xs text-gray-400 mb-1">
-                    Consultation Fee
-                  </p>
-
-                  <h3 className="font-bold text-slate-700 text-lg">
-                    ৳ {doctor.fee}
-                  </h3>
-                </div>
-              </div>
-            </div>
-
-            {/* availability */}
-            <div className="mb-8">
-              <h3 className="font-bold text-slate-700 mb-4 text-lg">
-                Availability
-              </h3>
-
-              <div className="flex flex-wrap gap-3">
-                {doctor.availability?.map((slot, index) => (
-                  <span
-                    key={index}
-                    className="bg-cyan-100 text-cyan-700 px-5 py-2 rounded-full text-sm font-semibold shadow-sm"
-                  >
-                    {slot}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <div>
-
-               
-              </div>
-              <div>
+              <div className="mt-10">
                 <BookingCardPage doctor={doctor} />
               </div>
-            </div>
-          </div>
-        </div>
 
-        {/* BOTTOM FEATURES */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 md:px-10 md:pb-10">
-
-          <div className="bg-slate-50 rounded-3xl p-6 flex items-start gap-4 border border-slate-100">
-            <div className="bg-cyan-100 p-4 rounded-2xl">
-              <ShieldCheck className="text-cyan-700" />
             </div>
 
-            <div>
-              <h3 className="font-bold text-slate-800 mb-1">
-                Trusted Specialist
-              </h3>
-
-              <p className="text-sm text-gray-500">
-                10+ years of experience in medical care.
-              </p>
-            </div>
           </div>
 
-          <div className="bg-slate-50 rounded-3xl p-6 flex items-start gap-4 border border-slate-100">
-            <div className="bg-cyan-100 p-4 rounded-2xl">
-              <BadgeCheck className="text-cyan-700" />
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 border-t border-gray-100 dark:border-zinc-800 bg-gradient-to-r from-cyan-50/50 to-white dark:from-zinc-900 dark:to-zinc-900 p-6 sm:p-8">
 
-            <div>
-              <h3 className="font-bold text-slate-800 mb-1">
-                Quality Care
-              </h3>
+            {[
+              {
+                icon: ShieldCheck,
+                title: "Trusted Specialist",
+                desc: "Safe and modern healthcare support.",
+              },
+              {
+                icon: CalendarDays,
+                title: "Easy Appointment",
+                desc: "Fast and flexible booking system.",
+              },
+              {
+                icon: HeartPulse,
+                title: "Patient Support",
+                desc: "Care-focused medical assistance.",
+              },
+            ].map((item, i) => {
+              const Icon = item.icon;
 
-              <p className="text-sm text-gray-500">
-                Advanced treatment with patient-focused support.
-              </p>
-            </div>
+              return (
+                <div
+                  key={i}
+                  className="bg-white dark:bg-zinc-900 rounded-3xl border border-gray-100 dark:border-zinc-800 p-6 shadow-[0_10px_30px_rgba(14,116,144,0.08)] hover:-translate-y-1 transition-all duration-300"
+                >
+                  <div className="bg-cyan-100 dark:bg-zinc-800 w-fit p-4 rounded-2xl mb-5">
+                    <Icon className="text-cyan-600" />
+                  </div>
+
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-white">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-gray-500 dark:text-gray-400 mt-3 text-sm leading-7">
+                    {item.desc}
+                  </p>
+                </div>
+              );
+            })}
+
           </div>
 
-          <div className="bg-slate-50 rounded-3xl p-6 flex items-start gap-4 border border-slate-100">
-            <div className="bg-cyan-100 p-4 rounded-2xl">
-              <HeartPulse className="text-cyan-700" />
-            </div>
+        </Card>
 
-            <div>
-              <h3 className="font-bold text-slate-800 mb-1">
-                Quick Response
-              </h3>
-
-              <p className="text-sm text-gray-500">
-                Fast appointment scheduling and support system.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Card>
+      </div>
     </div>
   );
 };

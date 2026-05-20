@@ -1,12 +1,12 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
-import { Avatar } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const NavBarPage = () => {
     const { data: session, isPending } = authClient.useSession();
@@ -26,16 +26,23 @@ const NavBarPage = () => {
         }
     };
 
+    const closeMenu = () => setIsOpen(false);
+
     const navLinkClass = (path) =>
-        `transition font-medium ${pathname === path
-            ? "text-cyan-700 border-b-2 border-cyan-600 pb-1"
-            : "hover:text-cyan-600"
+        `transition font-medium ${
+            pathname === path
+                ? "text-cyan-600 border-b-2 border-cyan-500 pb-1"
+                : "hover:text-cyan-600 dark:hover:text-cyan-400"
         }`;
 
     const links = (
         <>
             <li>
-                <Link href="/" className={navLinkClass("/")}>
+                <Link
+                    href="/"
+                    className={navLinkClass("/")}
+                    onClick={closeMenu} 
+                >
                     Home
                 </Link>
             </li>
@@ -44,6 +51,7 @@ const NavBarPage = () => {
                 <Link
                     href="/All-Appointments"
                     className={navLinkClass("/All-Appointments")}
+                    onClick={closeMenu}
                 >
                     All Appointments
                 </Link>
@@ -53,6 +61,7 @@ const NavBarPage = () => {
                 <Link
                     href="/dashboard"
                     className={navLinkClass("/dashboard")}
+                    onClick={closeMenu} 
                 >
                     Dashboard
                 </Link>
@@ -61,145 +70,150 @@ const NavBarPage = () => {
     );
 
     return (
-        <nav className="w-full bg-white/90 backdrop-blur-md border-b sticky top-0 z-50">
-            <div className="max-w-7xl mx-auto px-5">
-                <div className="flex items-center justify-between h-20">
+        <nav className="w-full bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-gray-200 dark:border-zinc-800 sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                <div className="flex items-center justify-between h-16 sm:h-20">
 
-                    {/* LOGO */}
-                    <Link href="/" className="flex items-center gap-3">
-                        <div className="w-[50px] h-[50px] rounded-full overflow-hidden border-2 border-blue-500">
-                            <Image
-                                src="/doctor.svg"
-                                alt="Doctor App Logo"
-                                width={50}
-                                height={50}
-                            />
-                        </div>
+                    <Link
+                        href="/"
+                        className="flex items-center gap-2 sm:gap-3 min-w-fit"
+                    >
+                        <Image
+                            src="/doctor.svg"
+                            alt="logo"
+                            width={50}
+                            height={50}
+                            className="w-10 h-10 sm:w-[50px] sm:h-[50px]"
+                        />
 
-                        <div>
-                            <h1 className="font-bold text-2xl">
-                                Doctor Appointment
-                            </h1>
-                        </div>
+                        <h1 className="text-base sm:text-xl font-black text-gray-800 dark:text-white whitespace-nowrap">
+                            Doctor
+                            <span className="text-cyan-600"> Appointment</span>
+                        </h1>
                     </Link>
 
-                    {/* DESKTOP MENU */}
-                    <ul className="hidden md:flex gap-8 font-medium">
+                    <ul className="hidden md:flex items-center gap-6 lg:gap-8 font-medium text-gray-700 dark:text-gray-200">
                         {links}
                     </ul>
 
-                    {/* AUTH (DESKTOP) */}
-                    <div className="hidden md:flex items-center gap-4">
+                    <div className="hidden md:flex items-center gap-3 lg:gap-4">
+
+                        <ThemeToggle />
 
                         {isPending ? (
                             <div className="flex items-center gap-2">
-                                <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" />
-                                <div className="w-20 h-8 bg-gray-200 animate-pulse rounded-lg" />
+                                <div className="w-9 h-9 rounded-full bg-gray-200 dark:bg-zinc-700 animate-pulse" />
+                                <div className="w-16 h-6 bg-gray-200 dark:bg-zinc-700 animate-pulse rounded" />
                             </div>
                         ) : user ? (
                             <>
-                                <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-cyan-500">
-                                    <Image
-                                        src={user?.image}
-                                        alt="user"
-                                        width={44}
-                                        height={44}
-                                        className="w-full h-full object-cover"
-                                    />
+                                <div className="flex items-center gap-3">
+
+                                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-cyan-500/30">
+                                        <Image
+                                            src={user?.image || "/user.png"}
+                                            alt="user"
+                                            width={40}
+                                            height={40}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+
+                                    <span className="text-sm font-medium">
+                                        {user?.name}
+                                    </span>
                                 </div>
 
                                 <button
                                     onClick={handleLogout}
                                     disabled={logoutLoading}
-                                    className="px-5 py-2 rounded-xl bg-red-500 text-white"
+                                    className="px-4 py-2 rounded-lg bg-red-500 text-white"
                                 >
-                                    {logoutLoading
-                                        ? "Logging out..."
-                                        : "Logout"}
+                                    {logoutLoading ? "Logging out..." : "Logout"}
                                 </button>
                             </>
                         ) : (
-                            <>
+                            <div className="flex items-center gap-3">
+
                                 <Link href="/login">
-                                    <button className="px-5 py-2 rounded-xl bg-blue-600 text-white">
+                                    <button className="px-4 py-2 bg-blue-600 text-white rounded-lg">
                                         Login
                                     </button>
                                 </Link>
 
                                 <Link href="/signup">
-                                    <button className="px-5 py-2 rounded-xl border border-blue-600 text-blue-600">
-                                        Signup
+                                    <button className="px-4 py-2 border border-cyan-500 text-cyan-600 rounded-lg">
+                                        Sign Up
                                     </button>
                                 </Link>
-                            </>
+
+                            </div>
                         )}
                     </div>
 
-                    {/* MOBILE MENU BUTTON */}
                     <button
                         onClick={() => setIsOpen(!isOpen)}
                         className="md:hidden"
                     >
-                        {isOpen ? <X size={30} /> : <Menu size={30} />}
+                        {isOpen ? <X size={28} /> : <Menu size={28} />}
                     </button>
                 </div>
 
-                {/* MOBILE MENU */}
                 {isOpen && (
-                    <div className="md:hidden pb-5">
-                        <ul className="flex flex-col gap-5 bg-gray-50 p-5 rounded-2xl">
+                    <div className="md:hidden mt-3 pb-4">
 
-                            {links}
+                        <div className="flex flex-col gap-4 p-4 bg-gray-50 dark:bg-zinc-900 rounded-2xl">
+
+                            <div className="flex justify-end">
+                                <ThemeToggle />
+                            </div>
+                            <ul className="flex flex-col gap-4">
+                                {links}
+                            </ul>
 
                             <div className="border-t pt-4">
 
-                                {isPending ? (
-                                    <p className="text-gray-400">
-                                        Loading user...
-                                    </p>
-                                ) : user ? (
+                                {user ? (
                                     <>
                                         <div className="flex items-center gap-3">
-                                            <Avatar
-                                                src={user?.image || ""}
-                                                className="w-12 h-12"
+
+                                            <Image
+                                                src={user?.image || "/user.png"}
+                                                width={42}
+                                                height={42}
+                                                alt="user"
+                                                className="rounded-full"
                                             />
 
-                                            <div>
-                                                <h2 className="font-semibold">
-                                                    {user?.name}
-                                                </h2>
-
-                                                <p className="text-sm text-gray-500">
-                                                    {user?.email}
-                                                </p>
-                                            </div>
+                                            <span>{user?.name}</span>
                                         </div>
 
                                         <button
                                             onClick={handleLogout}
-                                            className="w-full py-2 bg-red-500 text-white rounded-xl mt-3"
+                                            className="w-full mt-3 py-2 bg-red-500 text-white rounded-lg"
                                         >
                                             Logout
                                         </button>
                                     </>
                                 ) : (
-                                    <>
-                                        <Link href="/login">
-                                            <button className="w-full py-2 bg-blue-600 text-white rounded-xl">
+                                    <div className="flex flex-col gap-3">
+
+                                        <Link href="/login" onClick={closeMenu}>
+                                            <button className="w-full py-2 bg-blue-600 text-white rounded-lg">
                                                 Login
                                             </button>
                                         </Link>
 
-                                        <Link href="/signup">
-                                            <button className="w-full py-2 border border-blue-600 text-blue-600 rounded-xl mt-2">
-                                                Signup
+                                        <Link href="/signup" onClick={closeMenu}>
+                                            <button className="w-full py-2 border border-cyan-500 text-cyan-600 rounded-lg">
+                                                Sign Up
                                             </button>
                                         </Link>
-                                    </>
+
+                                    </div>
                                 )}
                             </div>
-                        </ul>
+                        </div>
                     </div>
                 )}
             </div>

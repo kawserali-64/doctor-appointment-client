@@ -11,102 +11,125 @@ import {
     Label,
     TextField,
 } from "@heroui/react";
+
+import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
+
     const onSubmit = async (e) => {
         e.preventDefault();
+
         const formData = new FormData(e.target);
         const user = Object.fromEntries(formData.entries());
 
-        const { data, error } = await authClient.signIn.email({
-            email: user.email,
-            password: user.password
-        })
-        if (data) {
-            redirect("/");
-        }
-        if (error) {
-            alert(error.message);
+        if (!user.email || !user.password) {
+            return toast.error("All fields are required");
         }
 
-    }
+        try {
+            const { data, error } = await authClient.signIn.email({
+                email: user.email,
+                password: user.password,
+            });
+
+            if (data) {
+                toast.success("Login successful!");
+                setTimeout(() => {
+                    redirect("/");
+                }, 1000);
+            }
+
+            if (error) {
+                toast.error(error.message);
+            }
+
+        } catch (err) {
+            toast.error("Something went wrong!");
+        }
+    };
+
     return (
-        <div className="max-w-7xl mx-auto p-5">
-            <div>
-                <h1 className="text-2xl font-bold">Login</h1>
-            </div>
-            <Card className="border rounded-none p-8">
-                <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
-                    <TextField
-                        isRequired
-                        name="email"
-                        type="email"
-                        validate={(value) => {
-                            if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-                                return "Please enter a valid email address";
-                            }
-                            return null;
-                        }}
-                    >
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-50 to-blue-100 dark:from-zinc-950 dark:to-zinc-900 px-4">
+
+            <Card className="w-full max-w-md p-8 rounded-3xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+
+                <div className="flex justify-center mb-6">
+                    <Image
+                        src="/doctor.svg"
+                        alt="logo"
+                        width={60}
+                        height={60}
+                    />
+                </div>
+
+                <h1 className="text-3xl font-black text-center text-gray-800 dark:text-white">
+                    Login Account
+                </h1>
+
+                <p className="text-center text-gray-500 dark:text-gray-400 mt-2 mb-6">
+                    Enter your credentials to continue
+                </p>
+
+                <Form onSubmit={onSubmit} className="flex flex-col gap-5">
+
+                    <TextField name="email" type="email" isRequired>
                         <Label>Email</Label>
-                        <Input placeholder="john@example.com" />
+                        <Input placeholder="Enter your email" />
                         <FieldError />
                     </TextField>
-                    <TextField
-                        isRequired
-                        minLength={8}
-                        name="password"
-                        type="password"
-                        validate={(value) => {
-                            if (value.length < 8) {
-                                return "Password must be at least 8 characters";
-                            }
-                            if (!/[A-Z]/.test(value)) {
-                                return "Password must contain at least one uppercase letter";
-                            }
-                            if (!/[0-9]/.test(value)) {
-                                return "Password must contain at least one number";
-                            }
-                            return null;
-                        }}
-                    >
+
+                    <TextField name="password" type="password" isRequired>
                         <Label>Password</Label>
                         <Input placeholder="Enter your password" />
-                        <Description>Must be at least 8 characters with 1 uppercase and 1 number</Description>
+                        <Description>
+                            Must be 8+ chars, 1 uppercase, 1 number
+                        </Description>
                         <FieldError />
                     </TextField>
-                    <div className="flex gap-2 justify-center">
-                        <Button className={'rounded-none w-full'} type="submit">
-                            Login
-                        </Button>
-                    </div>
-                </Form>
-                <div className="w-full">
-                    {/* Divider */}
-                    <div className="flex items-center gap-3 my-5">
-                        <div className="flex-1 h-px bg-gray-300"></div>
-                        <p className="text-sm text-gray-500">OR</p>
-                        <div className="flex-1 h-px bg-gray-300"></div>
-                    </div>
 
-                    {/* Google Button */}
                     <Button
-                        onClick={() =>
-                            authClient.signIn.social({
-                                provider: "google",
-                                callbackURL: "/",
-                            })
-                        }
-                        variant="bordered"
-                        className="w-full rounded-none h-12 text-base font-medium border-gray-300 hover:bg-gray-100 transition"
+                        type="submit"
+                        className="w-full h-12 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-xl"
                     >
-                        <FcGoogle size={24} />
-                        Continue with Google
+                        Login
                     </Button>
+
+                </Form>
+
+                <div className="flex items-center gap-3 my-6">
+                    <div className="flex-1 h-px bg-gray-300 dark:bg-zinc-700" />
+                    <p className="text-sm text-gray-500">OR</p>
+                    <div className="flex-1 h-px bg-gray-300 dark:bg-zinc-700" />
                 </div>
+
+                <Button
+                    onClick={() =>
+                        authClient.signIn.social({
+                            provider: "google",
+                            callbackURL: "/",
+                        })
+                    }
+                    variant="bordered"
+                    className="w-full h-12"
+                >
+                    <FcGoogle size={22} />
+                    Continue with Google
+                </Button>
+
+                {/* SIGNUP */}
+                <p className="text-center mt-6 text-sm text-gray-600 dark:text-gray-400">
+                    Don&apos;t have an account?{" "}
+                    <Link href="/signup" className="text-cyan-600 font-semibold">
+                        Sign up
+                    </Link>
+                </p>
+
             </Card>
+
         </div>
     );
 };
