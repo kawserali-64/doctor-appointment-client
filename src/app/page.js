@@ -1,3 +1,4 @@
+import AppointmentFeatureSectionPage from "@/components/AppointmentFeatureSection";
 import BannerPage from "@/components/Banner";
 import CategorySectionPage from "@/components/CategorySection";
 import FeaturePage from "@/components/Feature";
@@ -12,6 +13,7 @@ export default function Home() {
       <BannerPage />
       <FeaturePage />
       <CategorySectionPage />
+      <AppointmentFeatureSectionPage />
     </div>
   );
 }
